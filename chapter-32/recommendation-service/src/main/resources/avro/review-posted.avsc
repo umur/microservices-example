@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "ReviewPosted",
+  "namespace": "com.cinetrack.avro",
+  "fields": [
+    {"name": "reviewId", "type": "string"},
+    {"name": "userId", "type": "string"},
+    {"name": "movieId", "type": "string"},
+    {"name": "rating", "type": "int"},
+    {"name": "body", "type": ["null", "string"], "default": null},
+    {"name": "createdAt", "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}

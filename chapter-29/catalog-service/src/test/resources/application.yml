@@ -1,0 +1,8 @@
+# Unit tests use @ExtendWith(MockitoExtension.class) - no Spring context loaded.
+# Integration tests use @SpringBootTest + Testcontainers with @DynamicPropertySource.
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true

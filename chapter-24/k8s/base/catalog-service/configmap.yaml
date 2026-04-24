@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalog-service-config
+data:
+  DB_URL: "jdbc:postgresql://postgres-catalog:5432/catalog"
+  DB_USER: "cinetrack"
+  EUREKA_URI: "http://eureka-server:8761/eureka"
+  AUTH_SERVER_JWKS_URI: "http://user-service:8082/oauth2/jwks"
+  TMDB_API_KEY: "change-me"

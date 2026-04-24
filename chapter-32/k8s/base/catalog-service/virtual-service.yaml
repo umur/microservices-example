@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: catalog-service
+spec:
+  hosts:
+    - catalog-service
+  http:
+    - match:
+        - headers:
+            x-canary:
+              exact: "true"
+      route:
+        - destination:
+            host: catalog-service
+            subset: canary
+          weight: 100
+    - route:
+        - destination:
+            host: catalog-service
+            subset: stable
+          weight: 100

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-server-config
+data:
+  CONFIG_GIT_URI: "https://github.com/cinetrack/config-repo"
+  EUREKA_URI: "http://eureka-server:8761/eureka"

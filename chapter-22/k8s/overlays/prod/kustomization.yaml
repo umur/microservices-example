@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: cinetrack-prod
+
+resources:
+  - ../../base/eureka-server
+  - ../../base/config-server
+  - ../../base/api-gateway
+  - ../../base/catalog-service
+  - ../../base/user-service
+  - ../../base/watchlist-service
+  - ../../base/review-service
+  - ../../base/notification-service
+  - ../../base/recommendation-service
+
+images:
+  - name: cinetrack/catalog-service
+    newTag: latest
+  - name: cinetrack/user-service
+    newTag: latest
+  - name: cinetrack/watchlist-service
+    newTag: latest
+  - name: cinetrack/review-service
+    newTag: latest
+  - name: cinetrack/notification-service
+    newTag: latest
+  - name: cinetrack/recommendation-service
+    newTag: latest
+  - name: cinetrack/eureka-server
+    newTag: latest
+  - name: cinetrack/api-gateway
+    newTag: latest
+  - name: cinetrack/config-server
+    newTag: latest

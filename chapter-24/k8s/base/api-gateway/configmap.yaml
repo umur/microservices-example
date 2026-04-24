@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gateway-config
+data:
+  EUREKA_URI: "http://eureka-server:8761/eureka"
+  AUTH_SERVER_JWKS_URI: "http://user-service:8082/oauth2/jwks"

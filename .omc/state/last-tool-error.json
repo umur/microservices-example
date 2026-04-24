@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"grep -E \\\"Caused by|BeanCreation|ContextLoader|Connection|Unable|refused\\\" /Users/umurinan/Documents/books/microservices/code/cinetrack/catalog-service/target/surefire-reports/com.cinetrac...",
+  "error": "Exit code 1\njava.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@7ef7f6d5 testClass = com.cinetrack.catalog.infrastructure.MovieRepositoryIT, locations = [], classes = [com.cinetrack.catalog.CatalogServiceApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [\"org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true\"], contextCustomizers = [org.springframew...",
+  "timestamp": "2026-04-21T11:45:59.553Z",
+  "retry_count": 1
+}

@@ -1,0 +1,228 @@
+version: "3.9"
+
+services:
+  postgres-catalog:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: catalog
+      POSTGRES_USER: cinetrack
+      POSTGRES_PASSWORD: cinetrack
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cinetrack -d catalog"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-users:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: users
+      POSTGRES_USER: cinetrack
+      POSTGRES_PASSWORD: cinetrack
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cinetrack -d users"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-watchlist:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: watchlist
+      POSTGRES_USER: cinetrack
+      POSTGRES_PASSWORD: cinetrack
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cinetrack -d watchlist"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-reviews:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: reviews
+      POSTGRES_USER: cinetrack
+      POSTGRES_PASSWORD: cinetrack
+    ports:
+      - "5435:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cinetrack -d reviews"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kafka:
+    image: apache/kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  eureka-server:
+    build:
+      context: ./eureka-server
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8761/actuator/health | grep UP"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  config-server:
+    build:
+      context: ./config-server
+    ports:
+      - "8888:8888"
+    environment:
+      EUREKA_URI: http://eureka-server:8761/eureka
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_URI: http://eureka-server:8761/eureka
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+
+  catalog-service:
+    build:
+      context: ./catalog-service
+    ports:
+      - "8081:8081"
+    environment:
+      DB_URL: jdbc:postgresql://postgres-catalog:5432/catalog
+      DB_USER: cinetrack
+      DB_PASSWORD: cinetrack
+      EUREKA_URI: http://eureka-server:8761/eureka
+      AUTH_SERVER_JWKS_URI: http://user-service:8082/oauth2/jwks
+    depends_on:
+      postgres-catalog:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+
+  user-service:
+    build:
+      context: ./user-service
+    ports:
+      - "8082:8082"
+    environment:
+      DB_URL: jdbc:postgresql://postgres-users:5432/users
+      DB_USER: cinetrack
+      DB_PASSWORD: cinetrack
+      EUREKA_URI: http://eureka-server:8761/eureka
+    depends_on:
+      postgres-users:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+
+  watchlist-service:
+    build:
+      context: ./watchlist-service
+    ports:
+      - "8083:8083"
+    environment:
+      DB_URL: jdbc:postgresql://postgres-watchlist:5432/watchlist
+      DB_USER: cinetrack
+      DB_PASSWORD: cinetrack
+      EUREKA_URI: http://eureka-server:8761/eureka
+      AUTH_SERVER_JWKS_URI: http://user-service:8082/oauth2/jwks
+    depends_on:
+      postgres-watchlist:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+
+  review-service:
+    build:
+      context: ./review-service
+    ports:
+      - "8084:8084"
+    environment:
+      DB_URL: jdbc:postgresql://postgres-reviews:5432/reviews
+      DB_USER: cinetrack
+      DB_PASSWORD: cinetrack
+      KAFKA_BOOTSTRAP: kafka:9092
+      EUREKA_URI: http://eureka-server:8761/eureka
+      AUTH_SERVER_JWKS_URI: http://user-service:8082/oauth2/jwks
+    depends_on:
+      postgres-reviews:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+
+  notification-service:
+    build:
+      context: ./notification-service
+    ports:
+      - "8085:8085"
+    environment:
+      KAFKA_BOOTSTRAP: kafka:9092
+      EUREKA_URI: http://eureka-server:8761/eureka
+    depends_on:
+      kafka:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+
+  recommendation-service:
+    build:
+      context: ./recommendation-service
+    ports:
+      - "8086:8086"
+    environment:
+      REDIS_HOST: redis
+      KAFKA_BOOTSTRAP: kafka:9092
+      EUREKA_URI: http://eureka-server:8761/eureka
+      AUTH_SERVER_JWKS_URI: http://user-service:8082/oauth2/jwks
+    depends_on:
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package com.cinetrack.recommendation;
+
+option java_package = "com.cinetrack.recommendation.grpc";
+option java_outer_classname = "RecommendationProto";
+
+service RecommendationService {
+  rpc GetRecommendationsStream (RecommendationRequest) returns (stream RecommendationResponse);
+}
+
+message RecommendationRequest {
+  string user_id = 1;
+  int32 limit = 2;
+}
+
+message RecommendationResponse {
+  string movie_id = 1;
+  double score = 2;
+}
