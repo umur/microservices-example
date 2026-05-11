@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cinetrack_user
+    username: cinetrack
+    password: cinetrack
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+cinetrack:
+  user:
+    jwt-ttl: PT15M
+    refresh-ttl: P30D

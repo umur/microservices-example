@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cinetrack_watchlist
+    username: cinetrack
+    password: cinetrack
+
+cinetrack:
+  watchlist:
+    max-items-per-user: 500

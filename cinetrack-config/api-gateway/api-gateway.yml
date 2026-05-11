@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: catalog
+          uri: lb://catalog-service
+          predicates:
+            - Path=/api/catalog/**
+        - id: user
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+
+cinetrack:
+  gateway:
+    rate-limit:
+      requests-per-second: 100

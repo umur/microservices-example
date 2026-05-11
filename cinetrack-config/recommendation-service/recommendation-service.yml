@@ -1,0 +1,4 @@
+cinetrack:
+  recommendation:
+    top-k: 20
+    cache-ttl: PT1H

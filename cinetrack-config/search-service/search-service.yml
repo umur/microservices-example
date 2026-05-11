@@ -1,0 +1,5 @@
+cinetrack:
+  search:
+    elasticsearch:
+      uris: http://localhost:9200
+    page-size: 25
