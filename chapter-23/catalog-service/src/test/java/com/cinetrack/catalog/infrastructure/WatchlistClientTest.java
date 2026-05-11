@@ -13,7 +13,7 @@ class WatchlistClientTest {
 
     @Test
     void getWatchlistMovieIds_returnsEmptyList_whenServiceNotYetAvailable() {
-        // WatchlistClient stub — returns empty until ch10
+        // WatchlistClient stub: returns empty until ch10
         var client = new WatchlistClient(
                 org.springframework.web.client.RestClient.builder(),
                 "http://localhost:8083"

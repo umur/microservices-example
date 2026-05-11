@@ -33,7 +33,7 @@ public class RecommendationBatchService {
                 log.info("Rebuilding recommendation cache...");
                 // Batch rebuild logic goes here
             } else {
-                log.debug("Skipping batch — another instance holds the lock");
+                log.debug("Skipping batch: another instance holds the lock");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
