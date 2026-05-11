@@ -8,12 +8,10 @@ spring:
     config:
       server:
         git:
-          uri: ${CONFIG_GIT_URI:https://github.com/cinetrack/config-repo}
-          default-label: main
-          clone-on-start: false
-        native:
-          search-locations: classpath:/config
-      default-profile: native
+          uri: ${CONFIG_GIT_URI:https://github.com/umur/microservices-example}
+          default-label: develop
+          search-paths: 'cinetrack-config/{application}'
+          clone-on-start: true
 
 eureka:
   client:

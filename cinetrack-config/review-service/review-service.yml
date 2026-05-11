@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cinetrack_review
+    username: cinetrack
+    password: cinetrack
+
+cinetrack:
+  review:
+    min-length: 20
+    max-length: 5000

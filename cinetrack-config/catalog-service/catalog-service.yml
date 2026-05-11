@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cinetrack_catalog
+    username: cinetrack
+    password: cinetrack
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+cinetrack:
+  catalog:
+    page-size: 50
+    enable-recommendations: true
