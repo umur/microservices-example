@@ -2,11 +2,19 @@
 
 > Building a real microservices system end-to-end — from the first service to a production cluster.
 
+![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0-6DB33F?logo=spring&logoColor=white) ![Spring Cloud](https://img.shields.io/badge/Spring_Cloud-2025.x-6DB33F?logo=spring&logoColor=white) ![License: MIT](https://img.shields.io/badge/License%3A_MIT-MIT-blue)
+
 Companion code for the book **Microservices with Spring Boot 4** by [Umur Inan](https://umurinan.com).
 
 ## About the book
 
 CinéTrack is a film-tracking platform built as a production-grade microservices system: users register, browse a catalog sourced from TMDB, maintain watchlists, post reviews, and receive personalised recommendations. Across 34 chapters the system grows from a single Spring Boot service to a multi-service architecture with API gateway, service discovery, externalized config, distributed tracing, circuit breakers, event-driven workflows, and the operational maturity to run all of it.
+
+## Prerequisites
+
+- Java 21 LTS ([Temurin](https://adoptium.net))
+- Maven 3.9+
+- Docker & Docker Compose (Postgres, Redis, Kafka, Elasticsearch)
 
 ## Quick start
 
