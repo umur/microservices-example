@@ -1,6 +1,6 @@
 # Microservices with Spring Boot 4
 
-> Building a real microservices system end-to-end — from the first service to a production cluster.
+> Building a real microservices system end-to-end: from the first service to a production cluster.
 
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0-6DB33F?logo=spring&logoColor=white) ![Spring Cloud](https://img.shields.io/badge/Spring_Cloud-2025.x-6DB33F?logo=spring&logoColor=white) ![License: MIT](https://img.shields.io/badge/License%3A_MIT-MIT-blue)
 
@@ -28,11 +28,11 @@ To follow the book chapter by chapter, start at `chapter-01/` and progress forwa
 
 ## Layout
 
-- `chapter-01/ … chapter-34/` — cumulative system state at the end of each chapter
-- `final/` — the complete system
-- Top-level service modules — `api-gateway`, `catalog-service`, `user-service`, `watchlist-service`, `review-service`, `recommendation-service`, `notification-service`, `search-service`, plus `config-server`, `eureka-server`, and the shared `cinetrack-common` and `cinetrack-modulith` modules
-- `cinetrack-config/` — externalized configuration served by `config-server` via Spring Cloud Config
-- `k8s/` — baseline Kubernetes manifests for the final state
+- `chapter-01/ … chapter-34/`: cumulative system state at the end of each chapter
+- `final/`: the complete system
+- Top-level service modules: `api-gateway`, `catalog-service`, `user-service`, `watchlist-service`, `review-service`, `recommendation-service`, `notification-service`, `search-service`, plus `config-server`, `eureka-server`, and the shared `cinetrack-common` and `cinetrack-modulith` modules
+- `cinetrack-config/`: externalized configuration served by `config-server` via Spring Cloud Config
+- `k8s/`: baseline Kubernetes manifests for the final state
 
 ## Stack
 
@@ -52,4 +52,4 @@ I'm Umur Inan. I write books about Spring Boot, Java, distributed systems, and t
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
